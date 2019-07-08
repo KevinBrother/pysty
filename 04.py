@@ -9,11 +9,11 @@ def printTriangle():
         print('*', end='')
         print('\n')
 
-    """ for x in range(1, num+1):
+    """ for x in range(num):
         #print('这是第%i行', x)
-        for y in range(0, x):
+        for y in range(x+1):
             print('*', end='')
-        print('\n') """
+        print() """
 
 printTriangle()  
 
