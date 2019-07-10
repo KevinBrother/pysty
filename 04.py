@@ -4,19 +4,27 @@
 #打印三角形图案
 def printTriangle():
     num = int(input('打印几行的三角？'))
-    for x in range(num):
-        for y in range(num):
-          if 1 < 0:
-            i = 1 + 1
-            print(' ', end = '')
-          else:
-            print('*')
 
-    """ for x in range(num):
-        #print('这是第%i行', x)
-        for y in range(x+1):
+    # for x in range(num):                   
+    #     for y in range(num):
+    #       if num - x - y - 1 > 0:
+    #         print(' ', end = '')
+    #       else:
+    #         print('*', end = '')
+    #     print()
+
+    # for x in range(1, row+1):
+    #     #print('这是第%i行', x)
+    #     for _ in range(0, x):
+    #         print('*', end='')
+    #     print()
+
+    for i in range(num):
+        for _ in range(num - i -1):
+            print(' ', end='')
+        for _ in range(2 * i + 1):
             print('*', end='')
-        print() """
+        print()
 
 printTriangle()  
 
