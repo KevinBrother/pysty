@@ -1,13 +1,16 @@
-# utf-8
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 #打印三角形图案
 def printTriangle():
     num = int(input('打印几行的三角？'))
-    for x in range(num-1, 0):
-        for y in range(x, 0):
-            print(' ', end='')
-        print('*', end='')
-        print('\n')
+    for x in range(num):
+        for y in range(num):
+          if 1 < 0:
+            i = 1 + 1
+            print(' ', end = '')
+          else:
+            print('*')
 
     """ for x in range(num):
         #print('这是第%i行', x)
