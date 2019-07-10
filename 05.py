@@ -1,46 +1,69 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#craps赌博游戏
-#两个骰子 第一次和为7或11 玩家胜，和为2、3、12玩家输
-# 如果是其他数字，记录第一次的和，再次投掷至和第一次的值一样，玩家胜，
-# 如果投掷出和为7，则玩家输
 
 def craps():
+
+    #craps赌博游戏
+    #两个骰子 第一次和为6或11 玩家胜，和为2、3、12玩家输
+    # 如果是其他数字，记录第一次的和，再次投掷至和第一次的值一样，玩家胜，
+    # 如果投掷出和为6，则玩家输
+    # 初始资金 1000 
+    
+    account = 1000
+
     from random import randint
-    one = randint(1, 7) 
-    two = randint(1, 7)
-    first = one + two
 
-    if first == 7 or first == 11:
-       # print('玩家胜!')
-        return True
-    elif first == 2 or first == 3 or first == 12:
-       # print('玩家输!')
-        return False
-    else:
+    while account > 0:
+        print('您的总资产为： %i' % account)
+
         while True:
-            s_one = randint(1, 7)
-            s_two = randint(1, 7)
-            second = s_one + s_two
+            price = int(input('请下注！'))      
+            if  price > 0 and price <= account:
+                break
+            else:
+                print('您没有这么多的资产!')
 
-            if first == second:
-                #print('玩家胜')
-                #break
-                return True
-            elif second == 7:
-                #print('玩家输')
-                #break
-                return False
+        one = randint(1, 6) 
+        two = randint(1, 6)
+        first = one + two
 
-def countCraps():
+        print('玩家第一次摇出了%i点和%i点，总共%i点' % (one, two,first))
+        if first == 6 or first == 11:
+            print('玩家胜!')
+            account += price 
+        #return True
+        elif first == 2 or first == 3 or first == 12:
+            print('玩家输!')
+            acount -=price
+            # return False
+        else:
+            while True:
+                s_one = randint(1, 6)
+                s_two = randint(1, 6)
+                second = s_one + s_two
+                print('玩家摇出了%i点和%i点，总共%i点' % (s_one, s_two,second))
+                if first == second:
+                    print('玩家胜')
+                    account += price 
+                    break
+                    # return True
+                elif second == 7:
+                    print('玩家输')
+                    account -=price
+                    break
+                    # return False
+    print('您没有资产了！！')
+""" def countCraps():
     count = 0 
     for _ in range(1000):
         if craps():
             count += 1
-    print(count)
+    print(count) 
 countCraps()
-# craps()
+"""
+
+craps()
 
 
 """ 
