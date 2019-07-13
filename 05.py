@@ -35,7 +35,7 @@ def craps():
         #return True
         elif first == 2 or first == 3 or first == 12:
             print('玩家输!')
-            acount -=price
+            account -=price
             # return False
         else:
             while True:

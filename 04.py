@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#打印三角形图案
-def printTriangle():
-    num = int(input('打印几行的三角？'))
+# 打印三角形图案
 
-    # for x in range(num):                   
+
+def printTriangle():
+    n = int(input('打印几行的三角？'))
+
+    # for x in range(num):
     #     for y in range(num):
     #       if num - x - y - 1 > 0:
     #         print(' ', end = '')
@@ -19,14 +21,23 @@ def printTriangle():
     #         print('*', end='')
     #     print()
 
-    for i in range(num):
+    """  for i in range(num):
         for _ in range(num - i -1):
             print(' ', end='')
         for _ in range(2 * i + 1):
             print('*', end='')
-        print()
+        print() """
 
-printTriangle()  
+    # 打印 n 行
+    #  每行打印 n - i 个空格  i为行数
+    for i in range(n):
+        for _ in range(n-i-1):
+            print(' ', end='')
+        for _ in range(2 * i + 1):
+            print('*', end='')
+        print()
+    
+printTriangle()
 
 """ 
 # 循环结构 for-in 和 while
@@ -83,9 +94,7 @@ def isPrime():
 
 isPrime() """
 
-    
-            
-    
+
 """ 
 # 猜一百以内的数
 def inHun():
@@ -110,8 +119,6 @@ def inHun():
         print('您的智商余额不足，请充值！')
     
 inHun()     """
-
-
 
 
 """ 
