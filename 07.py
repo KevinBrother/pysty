@@ -7,22 +7,22 @@
 
 
 # 字符串
-def str():
+def strs():
 
-    str = 'hello world'
+    str1 = 'hello world'
 
     # find
-    print(str.find('ll'))
-    print(str.find('le'))
+    print(str1.find('ll'))
+    print(str1.find('le'))
 
     # index 和find类似 但是index找不到 会抛出异常
-    print(str.index('ll'))
-    print(str.index('le'))
+    print(str1.index('ll'))
+    print(str1.index('le'))
 
     # 切片
 
 
-def list():
+def lists():
 
     # 列表
     """  list1 = [1, 3, 5, 100]
@@ -237,23 +237,64 @@ def main():
                 print(' ', end='')
             print()
 
-    yhSan()
+    # yhSan()
 
+    from random import randint, sample
+    def dubMon(choses): 
+        # 双色球选号
+        # 每注号由七组数字组成
+        # 六个红色球，范围 1-33
+        # 1个蓝色球，范围 1-16
+        # 一等奖 七个号一样   一千万
+        # 二等奖 六个红球一致   五百万
+        # 三等奖 五红一篮   3000
+        # 四等奖 五红或四红一篮   200
+        # 五等奖 四红或三红一篮  10 
+        # 六等奖 一篮   5元
 
-"""     for i in range(2):
-        print('第一行 %i' % i)
+        red_balls = [x for x in range(1, 34)]
+        rball = sorted(sample(red_balls, 6))
+        bball = randint(1, 16)
+        # rball = [14, 12, 33, 4, 2, 1]
+        # bball = 9
 
-        for j in range(i):
-            print('第二行 %i' % j) """
+        redNum = 0
+        blueNum = 0
+        
+        cs_red = sorted(choses[:6])
+        for i in range(6):
+            for j in range(6):
+                if cs_red[i] == rball[j]:
+                    redNum += 1
+        if bball == choses[6]:
+            blueNum = 1
+        print('本次的中奖号为：')
+        print((' '.join('%s' % dd for dd in rball)), end='')
+        print(' | %i ' % bball)
 
-""" def arr():
-    ar = [[] for i in range(3)]
-    ar[1].append(1)
-    ar[1].append(1)
-    print(ar)
-    
-arr() """
+        if redNum == 6: 
+            if blueNum == 1:
+                print('恭喜获得一等奖：获得一千万奖金')
+            else:
+                print('恭喜获得二等奖：获得五百万奖金')
+        elif redNum == 5: 
+            if blueNum == 1:
+                print('恭喜获得三等奖等奖：获得3000元奖金')
+            else:
+                print('恭喜获得四等奖：获得200元奖金')
+        elif redNum == 4: 
+            if blueNum == 1:
+                print('恭喜获得四等奖：获得200元奖金')
+            else:
+                print('恭喜获得五等奖：获得10元奖金')
+        elif redNum == 3 and blueNum == 1:
+            print('恭喜获得五等奖：获得10元奖金')
+        elif blueNum == 1:
+            print('恭喜获得六等奖：获得5元奖金')
+        else: 
+            print('很遗憾，您没有中奖，再接再厉！')
 
+    dubMon([14, 12, 33, 4, 2, 1, 9])
 
 if __name__ == '__main__':
    # str()
