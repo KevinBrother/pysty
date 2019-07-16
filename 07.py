@@ -294,7 +294,41 @@ def main():
         else: 
             print('很遗憾，您没有中奖，再接再厉！')
 
-    dubMon([14, 12, 33, 4, 2, 1, 9])
+    # dubMon([14, 12, 33, 4, 2, 1, 9])
+
+    def game():
+        def print_board(board):
+            print(board['TL'] + '|' + board['TM'] + '|' + board['TR'])
+            print('-+-+-')
+            print(board['ML'] + '|' + board['MM'] + '|' + board['MR'])
+            print('-+-+-')
+            print(board['BL'] + '|' + board['BM'] + '|' + board['BR'])
+
+        init_board = {
+            'TL': ' ', 'TM': ' ', 'TR': ' ',
+            'ML': ' ', 'MM': ' ', 'MR': ' ',
+            'BL': ' ', 'BM': ' ', 'BR': ' '
+        }
+        # print_board(init_board)    
+
+        # 提示o输入，并改变值
+        # o输入完x输入
+        # 当都输入完 结束 ？？
+        import os
+        counter = 0
+        trun = 'o'
+        print_board(init_board)
+        while counter < 9:
+            input_key = input(print('轮到%s输入: ' % trun))
+            os.system('clear')
+            init_board[input_key] = trun
+            print(init_board)
+            print_board(init_board)
+            trun = 'x' if trun == 'o' else 'o'
+            counter += 1
+
+
+    # game()
 
 if __name__ == '__main__':
    # str()
