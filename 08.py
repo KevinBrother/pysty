@@ -36,50 +36,49 @@ def main():
     from math import sqrt
 
     class Point(object):
-
+        
+       
+        # 4.打印自己的距离
         def __init__(self, x=0, y=0):
-            """初始化方法
-            
-            :param x: 横坐标
-            :param y: 纵坐标
+            """  
+            1. 初始化
+                ：param x:横坐标
+                ：param y: 纵坐标
             """
             self.x = x
             self.y = y
 
-        def move_to(self, x, y):
-            """移动到指定位置
-            
-            :param x: 新的横坐标
-            "param y: 新的纵坐标
+        def move_to(self, dx, dy):
+            """  
+            #2.移动的增量
+                ：param x:移动的x轴方向的值
+                ：param y:移动的y轴方向的值
             """
-            self.x = x
-            self.y = y
+            self.x += dx 
+            self.y += dy 
 
-        def move_by(self, dx, dy):
-            """移动指定的增量
-            
-            :param dx: 横坐标的增量
-            "param dy: 纵坐标的增量
+        def distance(self, other):
+            """  
+            #3. 计算到另一个点的距离
+                ：param x:移动的x轴方向的值
+                ：param y:移动的y轴方向的值
             """
-            self.x += dx
-            self.y += dy
+            dx = self.x - other.x 
+            dy = self.y - other.y 
 
-        def distance_to(self, other):
-            """计算与另一个点的距离
-            
-            :param other: 另一个点
-            """
-            dx = self.x - other.x
-            dy = self.y - other.y
             return sqrt(dx ** 2 + dy ** 2)
 
         def __str__(self):
             return '(%s, %s)' % (str(self.x), str(self.y))
 
     def show_point():
-       
+        point1 = Point(1, 2)
+        print('point1的坐标为：%s' % point1)
+        point2 = Point(3, 5)
+        dis = point1.distance(point2)
+        print('p1和p2的距离为：%.2f' % dis)
 
-    abc()
+    # show_point()
 
 if __name__ == "__main__":
     main()
