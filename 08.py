@@ -75,10 +75,29 @@ def main():
         point1 = Point(1, 2)
         print('point1的坐标为：%s' % point1)
         point2 = Point(3, 5)
+        point2.Z = 6
+        print(point2.Z)
         dis = point1.distance(point2)
         print('p1和p2的距离为：%.2f' % dis)
 
     # show_point()
+
+    class Test:
+
+        def __init__(self, foo):
+            self.__foo = foo
+
+        def __bar(self):
+            print(self.__foo)
+            print('__bar')
+
+    def showTest():
+        test = Test('hello')
+        test._Test__bar()
+        print(test._Test__foo)
+        print(test)
+
+    showTest()
 
 if __name__ == "__main__":
     main()
