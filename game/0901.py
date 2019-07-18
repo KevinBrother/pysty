@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from random import randint
 
-def Fighter(self, metaclass=ABCMeta):
+class Fighter(object, metaclass=ABCMeta):
     """ 战斗者 """
     __slots__ = ('_name', '_hp')
 
@@ -23,7 +23,7 @@ def Fighter(self, metaclass=ABCMeta):
 
     @hp.setter
     def hp(self, hp):
-        self._hp = hp
+        self._hp = hp if hp >= 0 else 0
 
     @property
     def isAlive(self):
@@ -34,7 +34,7 @@ def Fighter(self, metaclass=ABCMeta):
         pass
 
 
-def Ultraman(Fighter):
+class Ultraman(Fighter):
     """ 奥特曼 """
     __slots__ = ('_name', '_hp', '_mp')
 
@@ -55,9 +55,9 @@ def Ultraman(Fighter):
             self._mp -= 50
 
             injury = other._hp * 3 // 4
-            injury = injury if other >= 50 else 50 
+            injury = injury if other._hp >= 50 else 50 
         else:
-            attack(self, other)
+            self.attack(other)
 
     def magic_attack(self, others):
         # 魔法群体攻击  被攻击的群体 10 ～ 15
@@ -66,8 +66,8 @@ def Ultraman(Fighter):
             self._mp -= 20
 
             for temp in others:
-                if temp.isAlive():
-                    attack(self, temp)
+                if temp.isAlive:
+                    self.attack(temp)
 
     def resume(self):
         # 回蓝 
@@ -80,7 +80,8 @@ def Ultraman(Fighter):
                 '生命值： %s' % self._hp + \
                 '魔法值： %s' % self._mp
 
-""" def Monster(Fighter):
+
+class Monster(Fighter):
     # 怪兽 
 
     def attack(self, other):
@@ -94,12 +95,14 @@ def Ultraman(Fighter):
         return '%s怪兽\n' % self._name + \
             '生命值： %s' % self._hp
 
+
 def is_any_alive(monsters):
     # '判断有没有活着的怪兽'
     for monster in monsters:
         if monster.isAlive:
             return True
     return False
+
 
 def select_one_alive(monsters):
     # 选中一只活着的怪兽
@@ -112,7 +115,7 @@ def display_info(ultraman, monsters):
     # '显示怪兽和奥特曼的信息'
     print(ultraman)
     for monster in monsters:
-        print(monster) """
+        print(monster)
 
 
 def main():
@@ -120,11 +123,39 @@ def main():
     # 30% 使用群体攻击
     # 10% 使用必杀技
     # 必杀技因为法力不足使用失败则普攻
-    ultraman  = Ultraman('艾迪', 700, 100)
+    ultraman  = Ultraman('艾迪', 10700, 300)
+    m1 = Monster('卡布达', 500)
+    m2 = Monster('皮卡超人', 700)
+    m3 = Monster('咀嚼兽', 600)
+    ms = [m1, m2, m3]
 
 
-    pass
+    round = 1
 
+    while ultraman.isAlive and is_any_alive(ms):
+        print('--------第%d回合---------' % round)
+        rd = randint(1, 10)
+        if rd <= 6:
+            monster = select_one_alive(ms)
+            ultraman.attack(monster)
+        elif rd <= 9:
+            ultraman.magic_attack(ms)
+        else:
+            monster = select_one_alive(ms)
+            ultraman.huge_attack(monster)
+
+        for m in ms:
+            if m.isAlive:
+                m.attack(ultraman)
+            
+        display_info(ultraman, ms)
+        round += 1
+
+    if ultraman.isAlive:
+        print('----------%s奥特曼胜利了----------' % ultraman.name)
+    else:
+        print('----------小怪兽胜利了----------')
+        # print('----------%s怪兽胜利了----------' % ms)
 
 if __name__ == "__main__":
     main()
