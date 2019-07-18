@@ -73,7 +73,102 @@ def main():
         # AttributeError: 'Person' object has no attribute '_is_gay'
         # person._is_gay = True
 
-    show_per()
+    # show_per()
+
+    from time import time, localtime, sleep
+
+
+    class Clock(object):
+        def __init__(self, hour=0,minute=0,second=0):
+            self.hour = hour
+            self.minute = minute
+            self.second = second
+
+        @classmethod
+        def now(cls):
+            ctime = localtime(time())
+            print('time %s' % time())
+            print(ctime)
+            return cls(ctime.tm_hour, ctime.tm_min, ctime.tm_sec)
+
+        def run(self):
+            self.second += 1
+            if self.second == 60:
+                self.second = 0
+                self.minute += 1
+                if self.minute == 60:
+                    self.minute = 0
+                    self.hour += 1
+                    if self.hour == 24:
+                        self.hour = 0
+
+        def show(self):
+            return '%02d:%02d:%02d' % \
+            (self.hour, self.minute, self.second)
+
+
+    def show_clock():
+        clock = Clock.now()
+        while True:
+            print(clock.show())
+            sleep(1)
+            clock.run()
+    
+    # show_clock()
+
+    # 继承
+    class Student(Person):
+        def __init__(self, name, age, grade):
+            super().__init__(name, age)
+            self._grade = grade
+
+        @property
+        def grade(self):
+            return self.grade
+
+        @grade.setter    
+        def grade(self, grade):
+            self._grade = grade
+
+        def study(self, course):
+            return ('%s的%s正在学习%s' % (self._grade, self._name, course))
+
+
+    def show_BasePerson():
+        student1 = Student('张三', 11, '三年级')
+        student1.play()
+        print(student1.study('历史'))
+
+    # show_BasePerson()
+
+    # 多态
+    from abc import ABCMeta, abstractmethod
+    class Pet(object, metaclass=ABCMeta):
+        
+        def __init__ (self, nickname):
+            self._nickname = nickname
+
+        @abstractmethod    
+        def make_voice(self):
+            # 发出声音
+            pass
+
+    class Dog(Pet):
+
+        def make_voice(self):
+            print('%s发出旺旺旺的叫声' % self._nickname)
+
+    class Cat(Pet):
+        def make_voice(self):
+            print('%s发出喵喵喵的叫声' % self._nickname)
+
+    def showPet():
+        dog = Dog('大黄')
+        cat = Cat('小橘')
+        dog.make_voice()
+        cat.make_voice()
+
+    showPet()
 
 if __name__ == "__main__":
     main()
