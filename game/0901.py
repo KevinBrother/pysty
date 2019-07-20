@@ -1,3 +1,4 @@
+# 奥特曼打小怪兽
 from abc import ABCMeta, abstractmethod
 from random import randint
 
@@ -23,6 +24,7 @@ class Fighter(object, metaclass=ABCMeta):
 
     @hp.setter
     def hp(self, hp):
+        print('set hp %d 和 self_hp %d' % (hp, self._hp))
         self._hp = hp if hp >= 0 else 0
 
     @property
@@ -46,7 +48,9 @@ class Ultraman(Fighter):
     def attack(self, other):
         # 普通攻击
         # 伤害在15～25区间
-        other._hp -= randint(15, 25)
+        dmg = randint(15, 25)
+        other.hp -= dmg
+        return dmg
 
     def huge_attack(self, other):
         # 必杀技  打掉对方至少50点或四分之三的血
@@ -54,25 +58,34 @@ class Ultraman(Fighter):
         if self._mp >= 50:
             self._mp -= 50
 
-            injury = other._hp * 3 // 4
-            injury = injury if other._hp >= 50 else 50 
+            dmg = other.hp * 3 // 4
+            dmg = dmg if other.hp >= 50 else 50 
+            other.hp -= dmg
+            return True, dmg
         else:
-            self.attack(other)
+            return False, self.attack(other)
 
     def magic_attack(self, others):
         # 魔法群体攻击  被攻击的群体 10 ～ 15
         # 消耗 20 mp
-         if self._mp >= 20:
+        if self._mp >= 20:
             self._mp -= 20
 
+            dmg = randint(10, 15)
             for temp in others:
                 if temp.isAlive:
-                    self.attack(temp)
+                    temp.hp -= dmg
+
+            return True, dmg
+        else:
+            return False, 0
 
     def resume(self):
         # 回蓝 
         # 恢复 1～10mp
-        self._mp += randint(1, 10)
+        rd_mp = randint(1, 10)
+        self._mp += rd_mp 
+        return rd_mp
 
     def __str__(self):
         # 自身信息
@@ -87,7 +100,9 @@ class Monster(Fighter):
     def attack(self, other):
         # 普通攻击
         # 伤害 10～20
-         other._hp -= randint(10, 20)
+        dmg = randint(10, 20)
+        other.hp -= dmg
+        return dmg
 
 
     def __str__(self):
@@ -123,36 +138,49 @@ def main():
     # 30% 使用群体攻击
     # 10% 使用必杀技
     # 必杀技因为法力不足使用失败则普攻
-    ultraman  = Ultraman('艾迪', 10700, 300)
-    m1 = Monster('卡布达', 500)
-    m2 = Monster('皮卡超人', 700)
-    m3 = Monster('咀嚼兽', 600)
+    u  = Ultraman('艾迪', 1000, 300)
+    m1 = Monster('卡布达', 250)
+    m2 = Monster('皮卡超人', 500)
+    m3 = Monster('咀嚼兽', 750)
     ms = [m1, m2, m3]
 
 
     round = 1
 
-    while ultraman.isAlive and is_any_alive(ms):
+    while u.isAlive and is_any_alive(ms):
         print('--------第%d回合---------' % round)
         rd = randint(1, 10)
-        if rd <= 6:
+        if rd <= 5:
             monster = select_one_alive(ms)
-            ultraman.attack(monster)
-        elif rd <= 9:
-            ultraman.magic_attack(ms)
+            print('%s奥特曼对%s怪兽造成了%d点伤害' % (u.name, monster.name, u.attack(monster)))
+            print('%s奥特曼回了%d点蓝' % (u.name, u.resume()))
+        elif rd <= 8:
+            mgc_atk = u.magic_attack(ms)
+            if mgc_atk[0]:
+                # print('%s奥特曼使用魔法攻击对怪兽们各造成了%d点伤害' % (u.name, rd))
+                print('%s奥特曼使用魔法攻击对怪兽们造成了%d伤害' % (u.name, mgc_atk[1]))
+            else:
+                print('%s奥特曼使用魔法失败' % u.name)
+                
         else:
             monster = select_one_alive(ms)
-            ultraman.huge_attack(monster)
+            huge_atk = u.huge_attack(monster)
+            if huge_atk[0]:
+                print('%s奥特曼对%s怪兽使用了必杀技造成了%d点伤害' % (u.name, monster.name, huge_atk[1]))
+            else:
+                print('%s奥特曼对%s怪兽造成了%d点伤害' % (u.name, monster.name, huge_atk[1]))
+                print('%s奥特曼回了%d点蓝' % (u.name, u.resume()))
 
         for m in ms:
             if m.isAlive:
-                m.attack(ultraman)
+                print('%s怪兽对%s奥特曼造成了%d点伤害' % (m.name, u.name, m.attack(u)))
+                
             
-        display_info(ultraman, ms)
+        display_info(u, ms)
         round += 1
 
-    if ultraman.isAlive:
-        print('----------%s奥特曼胜利了----------' % ultraman.name)
+    if u.isAlive:
+        print('----------%s奥特曼胜利了----------' % u.name)
     else:
         print('----------小怪兽胜利了----------')
         # print('----------%s怪兽胜利了----------' % ms)
