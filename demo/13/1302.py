@@ -4,28 +4,24 @@ import tkinter.messagebox
 
 from threading import Thread
 
-class DownloadThread(Thread):
-    def __init__(self):
-        super().__init__()
-
-    def run(self):
-        # 做事
-        time.sleep(10)
-        tkinter.messagebox.showinfo('提示', '下载完成！')
-        # 下载完成
-        button1.config(state=tkinter.NORMAL)
-
-def download():
-    button1.config(state=tkinter.DISABLED)
-    # 通过daemon参数将线程设置为守护线程(主程序退出就不再保留执行)
-    DownloadThread(daemon=True).start()
-
-
-def show_about():
-    tkinter.messagebox.showinfo('关于', '作者: 骆昊(v1.0)')
-
-
 def main():
+    class DownloadThread(Thread):
+        def run(self):
+            # 做事
+            time.sleep(10)
+            tkinter.messagebox.showinfo('提示', '下载完成！')
+            # 下载完成
+            button1.config(state=tkinter.NORMAL)
+
+    def download():
+        button1.config(state=tkinter.DISABLED)
+        # 通过daemon参数将线程设置为守护线程(主程序退出就不再保留执行)
+        DownloadThread(daemon=True).start()
+
+
+    def show_about():
+        tkinter.messagebox.showinfo('关于', '作者: 骆昊(v1.0)')
+
     top = tkinter.Tk()
     top.title('单线程')
     top.geometry('200x150')
