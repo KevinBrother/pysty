@@ -21,8 +21,6 @@ def test_else_finally3():
         print(0)
         return 0
 
-
-
 def main():
     # print(abc())
     print(test_else_finally3())
