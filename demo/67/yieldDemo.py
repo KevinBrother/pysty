@@ -4,12 +4,20 @@ def foo():
         a,b = b, a + b
         yield a
 
+def countdown(n):
+    while n > 0:
+        yield n
+        n -= 1
+
 def main():
-    g = foo()
+    """  g = foo()
     for _ in range(10):
         print(g)
-        print(foo)
+        print(foo) """
         # print(next(g))
+
 
 if __name__ == "__main__":
     main()
+
+
